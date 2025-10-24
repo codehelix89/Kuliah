@@ -24,6 +24,7 @@ Dengan struktur penyimpanan terpusat, repository ini mendukung prinsip **Quality
 - Integrasi sistem informasi pendidikan  
 
 ---
+
 ## 💡 Kontribusi & Pembaruan
 Jika terdapat kesalahan, pembaruan, atau revisi terhadap dokumen UTS/UAS, mohon lakukan *pull request* atau menghubungi pengelola repository.
 
@@ -43,17 +44,15 @@ Jika terdapat kesalahan, pembaruan, atau revisi terhadap dokumen UTS/UAS, mohon 
 
 ## Contoh Akses Link:
 Link Kisi:
-UTS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/01.%20Kisi-Kisi/01.%20UTS/01.%20AKM%201%20-%20UTS%20VER%201.0.pdf
-UAS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/01.%20Kisi-Kisi/02.%20UAS/03.%20AKM%201%20-%20UAS%20VER%201.0.pdf
+- UTS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/01.%20Kisi-Kisi/01.%20UTS/01.%20AKM%201%20-%20UTS%20VER%201.0.pdf
+- UAS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/01.%20Kisi-Kisi/02.%20UAS/03.%20AKM%201%20-%20UAS%20VER%201.0.pdf
 
 
 Ujian AKM 1:
-UTS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/02.%20UTS/UTS%20AKM-1%20VER%201.0.pdf
-UAS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/03.%20UAS/UAS%20AKM-1%20VER%201.0.pdf
+- UTS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/02.%20UTS/UTS%20AKM-1%20VER%201.0.pdf
+- UAS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/02.%20Akuntansi%20Keuangan%20Menengah%201/03.%20UAS/UAS%20AKM-1%20VER%201.0.pdf
 
 Ujian SIA:
-UTS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/01.%20Sistem%20Informasi%20Akuntansi/02.%20UTS/Sistem%20Informasi%20Akuntansi%20VER%201.0.pdf
+- UTS: https://codehelix89.github.io/Kuliah/?file=Matakuliah/01.%20Sistem%20Informasi%20Akuntansi/02.%20UTS/Sistem%20Informasi%20Akuntansi%20VER%201.0.pdf
 
-### 🏷️ Tags
-`#UTS` `#UAS` `#KisiKisi` `#OBE` `#AcademicRepository` `#HigherEducation` `#QualityAssurance`
-
+---
