@@ -11,7 +11,7 @@ const params = new URLSearchParams(window.location.search);
 const fileParam = params.get("file");
 
 // Tentukan file default jika parameter tidak ada
-const defaultFile = "ujian/ujian1.pdf";
+const defaultFile = "default.pdf";
 const fileToLoad = fileParam ? decodeURIComponent(fileParam) : defaultFile;
 
 // Ambil elemen viewer
