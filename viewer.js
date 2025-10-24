@@ -1,18 +1,23 @@
 // ======================================================
-// viewer.js — Multi-folder PDF Viewer untuk GitHub Pages
+// viewer.js — Mendukung Struktur Folder Bersarang di GitHub Pages
 // ======================================================
 
 const pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// Ambil parameter dari URL (?file=folder/nama.pdf)
+// Ambil parameter file dari URL (?file=...)
 const params = new URLSearchParams(window.location.search);
-const fileParam = params.get("file");
+let fileParam = params.get("file");
 
-// Tentukan file default jika parameter tidak ada
+// Tentukan file default
 const defaultFile = "default.pdf";
-const fileToLoad = fileParam ? decodeURIComponent(fileParam) : defaultFile;
+
+// Jika tidak ada parameter, gunakan file default
+if (!fileParam) fileParam = defaultFile;
+
+// Decode URL agar mendukung spasi dan karakter khusus
+const pdfPath = decodeURIComponent(fileParam);
 
 // Ambil elemen viewer
 const viewerContainer = document.getElementById('pdfViewer');
@@ -31,10 +36,10 @@ function renderPage(pdf, pageNumber) {
   });
 }
 
-// Fungsi utama memuat PDF
+// Fungsi utama untuk memuat PDF
 function loadPDF(url) {
-  viewerContainer.innerHTML = `<p style='text-align:center;'>📄 Memuat dokumen dari <b>${url}</b>...</p>`;
-  
+  viewerContainer.innerHTML = `<p style="text-align:center;">📄 Memuat dokumen dari:<br><b>${url}</b></p>`;
+
   pdfjsLib.getDocument(url).promise.then(pdfDoc => {
     viewerContainer.innerHTML = "";
     console.log(`📚 Memuat ${pdfDoc.numPages} halaman dari ${url}`);
@@ -51,4 +56,4 @@ function loadPDF(url) {
 }
 
 // Jalankan
-loadPDF(fileToLoad);
+loadPDF(pdfPath);
