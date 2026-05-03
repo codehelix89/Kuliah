@@ -16,7 +16,8 @@ const defaultFile = "default.pdf";
 if (!fileParam) fileParam = defaultFile;
 
 // Decode agar bisa membaca spasi (%20) dan karakter khusus
-const pdfPath = decodeURIComponent(fileParam);
+const basePath = window.location.origin + "/Kuliah/";
+const pdfPath = basePath + decodeURIComponent(fileParam);
 
 // Ambil elemen kontainer viewer
 const viewerContainer = document.getElementById('pdfViewer');
