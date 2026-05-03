@@ -1,62 +1,115 @@
 // ======================================================
-// viewer.js — Kompatibel untuk Struktur Folder Bersarang di GitHub Pages
+// viewer.js — Versi Final (GitHub Pages Compatible)
+// Absolute Path + Robust Error Handling
 // ======================================================
 
-// Inisialisasi PDF.js dari CDN
+// Inisialisasi PDF.js
 const pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// Ambil parameter file (?file=...)
+// Ambil parameter URL (?file=...)
 const params = new URLSearchParams(window.location.search);
 let fileParam = params.get("file");
 
-// Tentukan file default jika tidak ada parameter
-const defaultFile = "default.pdf";
-if (!fileParam) fileParam = defaultFile;
+// Default file
+const DEFAULT_FILE = "default.pdf";
+if (!fileParam) fileParam = DEFAULT_FILE;
 
-// Decode agar bisa membaca spasi (%20) dan karakter khusus
-const basePath = window.location.origin + "/Kuliah/";
-const pdfPath = basePath + decodeURIComponent(fileParam);
+// Ambil base URL GitHub Pages
+const REPO_NAME = "Kuliah"; // ⚠️ Sesuaikan jika nama repo berubah
+const BASE_URL = `${window.location.origin}/${REPO_NAME}/`;
 
-// Ambil elemen kontainer viewer
+// Decode & bentuk full path (ABSOLUTE PATH)
+const decodedPath = decodeURIComponent(fileParam);
+const pdfPath = BASE_URL + decodedPath;
+
+// Ambil container
 const viewerContainer = document.getElementById('pdfViewer');
 
-// Fungsi render satu halaman
+// ======================================================
+// Render satu halaman PDF
+// ======================================================
 function renderPage(pdf, pageNumber) {
   pdf.getPage(pageNumber).then(page => {
     const scale = 1.25;
     const viewport = page.getViewport({ scale });
+
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
+
     canvas.height = viewport.height;
     canvas.width = viewport.width;
+
     viewerContainer.appendChild(canvas);
-    page.render({ canvasContext: ctx, viewport });
+
+    page.render({
+      canvasContext: ctx,
+      viewport: viewport
+    });
   });
 }
 
-// Fungsi memuat PDF
+// ======================================================
+// Load PDF
+// ======================================================
 function loadPDF(url) {
-  console.log("📂 Mencoba memuat:", url);
-  viewerContainer.innerHTML = `<p style="text-align:center;">📄 Memuat dokumen...<br><b>${url}</b></p>`;
 
-  pdfjsLib.getDocument(url).promise.then(pdfDoc => {
-    viewerContainer.innerHTML = "";
-    console.log(`📚 File ditemukan (${pdfDoc.numPages} halaman)`);
-    for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-      renderPage(pdfDoc, pageNum);
-    }
-  }).catch(err => {
-    console.error("❌ Gagal memuat PDF:", err);
-    viewerContainer.innerHTML = `
-      <div style="text-align:center;color:red;padding:30px;">
-        ❌ Gagal memuat file: <b>${url}</b><br>
-        Pastikan file berada di lokasi dan branch yang sama dengan index.html.
-        <br><br><small>${err.message}</small>
-      </div>`;
-  });
+  console.log("📂 Loading PDF:", url);
+
+  viewerContainer.innerHTML = `
+    <div style="text-align:center;padding:20px;">
+      📄 Memuat dokumen...<br>
+      <small>${url}</small>
+    </div>
+  `;
+
+  pdfjsLib.getDocument(url).promise
+    .then(pdfDoc => {
+      console.log(`✅ PDF loaded (${pdfDoc.numPages} pages)`);
+
+      viewerContainer.innerHTML = "";
+
+      for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+        renderPage(pdfDoc, pageNum);
+      }
+    })
+    .catch(err => {
+
+      console.error("❌ ERROR:", err);
+
+      viewerContainer.innerHTML = `
+        <div style="
+          text-align:center;
+          color:red;
+          padding:30px;
+          font-family:Arial;
+        ">
+          <h3>❌ Gagal memuat PDF</h3>
+          <p><b>${url}</b></p>
+          
+          <p style="color:#555;">
+            Kemungkinan penyebab:
+          </p>
+          <ul style="text-align:left; display:inline-block;">
+            <li>File tidak ada di repository</li>
+            <li>Path tidak sesuai (case-sensitive)</li>
+            <li>Belum di-push ke branch GitHub Pages</li>
+          </ul>
+
+          <hr style="margin:20px 0;">
+          <small>${err.message}</small>
+        </div>
+      `;
+    });
 }
 
-// Jalankan viewer
-loadPDF(pdfPath);
+// ======================================================
+// Validasi sebelum load
+// ======================================================
+if (!decodedPath.endsWith(".pdf")) {
+  console.warn("⚠️ File bukan PDF, fallback ke default");
+  loadPDF(BASE_URL + DEFAULT_FILE);
+} else {
+  loadPDF(pdfPath);
+}
